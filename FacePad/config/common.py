@@ -38,7 +38,7 @@ class Common(Configuration):
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
 
-    ALLOWED_HOSTS = ["*"]
+    ALLOWED_HOSTS = ["*"]  # TODO hardcode ALLOWED_HOSTS for production
     ROOT_URLCONF = 'FacePad.urls'
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
     WSGI_APPLICATION = 'FacePad.wsgi.application'
@@ -99,7 +99,7 @@ class Common(Configuration):
         },
     ]
 
-    # Set DEBUG to False as a default for safety
+    # TODO Set DEBUG to False as a default for safety
     # https://docs.djangoproject.com/en/dev/ref/settings/#debug
     DEBUG = strtobool(os.getenv('DJANGO_DEBUG', 'no'))
 
