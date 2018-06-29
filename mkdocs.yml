@@ -1,0 +1,12 @@
+site_name: FacePad
+site_description: Small social network built using Django REST Framework.
+repo_url: https://github.com/BrandonSersion/FacePad
+site_dir: site
+copyright: Copyright &copy; 2018, <a href="https://github.com/BrandonSersion">BrandonSersion</a>.
+dev_addr: 0.0.0.0:8001
+
+pages:
+  - Home: 'index.md'
+  - API:
+    - Authentication: 'api/authentication.md'
+    - Users: 'api/users.md'
