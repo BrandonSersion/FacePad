@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 from .models import User
 
 
@@ -20,6 +21,12 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'auth_token',)
+        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'auth_token', 'date_of_birth',)
         read_only_fields = ('auth_token',)
         extra_kwargs = {'password': {'write_only': True}}
+        validators = [
+            UniqueTogetherValidator(
+                queryset=User.objects.all(),
+                fields=('email', 'username')
+            )
+        ]
