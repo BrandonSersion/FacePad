@@ -1,8 +1,8 @@
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import AllowAny
-from .models import User, Content
+from .models import User, Content, Rate
 from .permissions import IsUserOrReadOnly
-from .serializers import CreateUserSerializer, UserSerializer, ContentSerializer
+from .serializers import CreateUserSerializer, UserSerializer, ContentSerializer, RateSerializer
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
@@ -32,4 +32,13 @@ class ContentViewSet(viewsets.ModelViewSet):
     """
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
+    permission_classes = (AllowAny,)
+
+
+class RateViewSet(viewsets.ModelViewSet):
+    """
+    Creates new rate
+    """
+    queryset = Rate.objects.all()
+    serializer_class = RateSerializer
     permission_classes = (AllowAny,)

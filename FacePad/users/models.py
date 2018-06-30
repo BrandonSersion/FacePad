@@ -23,6 +23,16 @@ class Content(models.Model):
     description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.title
+
+class Rate(models.Model):
+    RATE_CHOICES = ((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5'),)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    value = models.IntegerField(choices=RATE_CHOICES)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
-from .models import User, Content
+from .models import User, Content, Rate
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -39,3 +39,10 @@ class ContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
         fields = ('id', 'title', 'date_created', 'description',)
+
+
+class RateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Rate
+        fields = ('id', 'value', 'user', 'content')
