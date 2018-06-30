@@ -5,9 +5,11 @@ from .models import User, Content
 
 class UserSerializer(serializers.ModelSerializer):
 
+    content = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name',)
+        fields = ('id', 'username', 'first_name', 'last_name', 'content',)
         read_only_fields = ('username', )
 
 
@@ -27,13 +29,13 @@ class CreateUserSerializer(serializers.ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset = User.objects.all(),
-                fields = ('email', 'username')
+                fields = ('email', 'username',)
             )
         ]
 
         
 class ContentSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = Content
-        fields = ('id', 'title', 'date_created', 'description')
+        fields = ('id', 'title', 'date_created', 'description',)
