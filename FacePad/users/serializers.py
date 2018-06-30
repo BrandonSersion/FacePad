@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
-from .models import User
+from .models import User, Content
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,7 +26,14 @@ class CreateUserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
         validators = [
             UniqueTogetherValidator(
-                queryset=User.objects.all(),
-                fields=('email', 'username')
+                queryset = User.objects.all(),
+                fields = ('email', 'username')
             )
         ]
+
+        
+class ContentSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Content
+        fields = ('id', 'title', 'date_created', 'description')
