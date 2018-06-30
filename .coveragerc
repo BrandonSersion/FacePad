@@ -7,4 +7,3 @@ omit = *migrations*,
        ./manage.py,
        ./FacePad/config/*,
        ./FacePad/wsgi.py,
-       *__init__*
