@@ -36,7 +36,7 @@ class Rate(models.Model):
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.value + ' rating on ' + self.content
+        return f'{self.user} rated "{self.content}" {self.value}'
 
 
 class Comment(models.Model):
@@ -47,7 +47,7 @@ class Comment(models.Model):
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'comment by ' + self.user + ' on ' + self.content
+        return f'comment by {self.user} on {self.content}'
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
