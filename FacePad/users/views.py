@@ -28,27 +28,27 @@ class UserCreateViewSet(mixins.CreateModelMixin,
 
 class ContentViewSet(viewsets.ModelViewSet):
     """
-    Creates new content
+    Creates, updates, deletes, lists, retrieves contents
     """
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsUserOrReadOnly,)
 
 
 class RateViewSet(viewsets.ModelViewSet):
     """
-    Creates new rate
+    Creates, updates, deletes, lists, retrieves rates
     """
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsUserOrReadOnly,)
 
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     """
-    Creates new comment
+    Creates, updates, deletes, lists, retrieves comments
     """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsUserOrReadOnly,)

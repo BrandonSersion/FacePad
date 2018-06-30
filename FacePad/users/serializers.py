@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name',) #  'content',
+        fields = ('id', 'username', 'first_name', 'last_name',)  # 'content',
         read_only_fields = ('username', )
 
 
@@ -23,7 +23,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'email', 'first_name', 'last_name', 'auth_token', 'date_of_birth',)
+        fields = ('id', 'username', 'password', 'email', 'first_name', 'last_name', 'auth_token', 'date_of_birth',)
         read_only_fields = ('auth_token',)
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -32,14 +32,14 @@ class ContentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Content
-        fields = ('title', 'description', 'date_created', 'user',)
+        fields = ('id', 'title', 'description', 'date_created', 'user',)
 
 
 class RateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rate
-        fields = ('value', 'user', 'content',)
+        fields = ('id', 'value', 'user', 'content',)
         validators = [
             UniqueTogetherValidator(
                 queryset = Rate.objects.all(),
@@ -52,4 +52,4 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('text', 'date_created', 'user', 'content',)
+        fields = ('id', 'text', 'date_created', 'user', 'content',)

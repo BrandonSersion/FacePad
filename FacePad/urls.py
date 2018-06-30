@@ -8,11 +8,11 @@ from rest_framework.authtoken import views
 from .users.views import UserViewSet, UserCreateViewSet, ContentViewSet, RateViewSet, CommentViewSet
 
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'users', UserCreateViewSet)
-router.register(r'content', ContentViewSet)
-router.register(r'rate', RateViewSet)
-router.register(r'comment', CommentViewSet)
+router.register('users', UserViewSet)
+router.register('users', UserCreateViewSet)
+router.register('content', ContentViewSet)
+router.register('rate', RateViewSet)
+router.register('comment', CommentViewSet)
 
 
 urlpatterns = [

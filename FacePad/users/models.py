@@ -34,6 +34,9 @@ class Rate(models.Model):
     value = models.IntegerField(choices=RATE_CHOICES)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.value + ' rating on ' + self.content
 
 
 class Comment(models.Model):
@@ -42,6 +45,9 @@ class Comment(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'comment by ' + self.user + ' on ' + self.content
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
