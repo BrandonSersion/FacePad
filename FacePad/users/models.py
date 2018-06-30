@@ -11,7 +11,7 @@ from rest_framework.authtoken.models import Token
 @python_2_unicode_compatible
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    date_of_birth = models.DateField(null=True)
+    date_of_birth = models.DateField(null=True)  # TODO add unique constraint to email, switch to AbstractBaseUser
 
     def __str__(self):
         return self.username
@@ -19,7 +19,7 @@ class User(AbstractUser):
 
 class Content(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

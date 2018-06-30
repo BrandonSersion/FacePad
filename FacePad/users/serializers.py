@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
+from rest_framework.validators import UniqueValidator, UniqueTogetherValidator
 from .models import User, Content, Rate, Comment
 
 
@@ -26,12 +26,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
         fields = ('username', 'password', 'email', 'first_name', 'last_name', 'auth_token', 'date_of_birth',)
         read_only_fields = ('auth_token',)
         extra_kwargs = {'password': {'write_only': True}}
-        validators = [
-            UniqueTogetherValidator(
-                queryset = User.objects.all(),
-                fields = ('email', 'username',)
-            )
-        ]
 
         
 class ContentSerializer(serializers.ModelSerializer):
@@ -39,12 +33,6 @@ class ContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
         fields = ('title', 'description', 'date_created', 'user',)
-        validators = [
-            UniqueTogetherValidator(
-                queryset = Content.objects.all(),
-                fields = ('title',)
-            )
-        ]
 
 
 class RateSerializer(serializers.ModelSerializer):
@@ -52,6 +40,12 @@ class RateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rate
         fields = ('value', 'user', 'content',)
+        validators = [
+            UniqueTogetherValidator(
+                queryset = Rate.objects.all(),
+                fields = ('user', 'content',)
+            )
+        ]
 
 
 class CommentSerializer(serializers.ModelSerializer):
