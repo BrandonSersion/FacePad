@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Content, Rate, Comment
+from .models import User, Content, Rate, Comment, Friend
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
@@ -18,3 +18,6 @@ class RateAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     pass
 
+@admin.register(Friend)
+class FriendAdmin(admin.ModelAdmin):
+    pass

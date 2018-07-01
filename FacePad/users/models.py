@@ -12,6 +12,12 @@ from rest_framework.authtoken.models import Token
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     date_of_birth = models.DateField(null=True)  # TODO add unique constraint to email, switch to AbstractBaseUser
+    friends = models.ManyToManyField(
+        'self',
+        through='Friend',
+        symmetrical=False,
+        related_name='related_to',
+    )
 
     def __str__(self):
         return self.username
@@ -48,6 +54,20 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'comment by {self.user} on {self.content}'
+
+
+class Friend(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='user'
+    )
+    recipient = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='to_user'
+    )
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

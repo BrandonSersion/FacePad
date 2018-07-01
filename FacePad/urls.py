@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
-from .users.views import UserViewSet, UserCreateViewSet, ContentViewSet, RateViewSet, CommentViewSet
+from .users.views import UserViewSet, UserCreateViewSet, ContentViewSet, RateViewSet, CommentViewSet, FriendViewSet
 
 router = DefaultRouter()
 router.register('users', UserViewSet)
@@ -13,6 +13,7 @@ router.register('users', UserCreateViewSet)
 router.register('content', ContentViewSet)
 router.register('rate', RateViewSet)
 router.register('comment', CommentViewSet)
+router.register('friend', FriendViewSet)
 
 
 urlpatterns = [

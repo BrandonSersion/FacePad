@@ -1,8 +1,8 @@
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import AllowAny, IsAdminUser
-from .models import User, Content, Rate, Comment
+from .models import User, Content, Rate, Comment, Friend
 from .permissions import IsUser, IsUserOrFriend
-from .serializers import CreateUserSerializer, UserSerializer, ContentSerializer, RateSerializer, CommentSerializer
+from .serializers import CreateUserSerializer, UserSerializer, ContentSerializer, RateSerializer, CommentSerializer, FriendSerializer
 from .mixins import MixedPermissionModelMixin
 
 
@@ -73,3 +73,12 @@ class CommentViewSet(MixedPermissionModelMixin,
         'list': [IsAdminUser],
         'retrieve': [IsUserOrFriend],
     }
+
+
+class FriendViewSet(viewsets.ModelViewSet):
+    """
+    Creates, updates, deletes, lists, retrieves friend links
+    """
+    queryset = Friend.objects.all()
+    serializer_class = FriendSerializer
+    permission_classes = (IsUser,)

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator, UniqueTogetherValidator
-from .models import User, Content, Rate, Comment
+from .models import User, Content, Rate, Comment, Friend
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -57,3 +57,11 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'text', 'date_created', 'user', 'content',)
+
+
+class FriendSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = Friend
+        fields = ('user', 'recipient',)
