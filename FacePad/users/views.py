@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny, IsAdminUser
 from .models import User, Content, Rate, Comment
 from .permissions import IsUser, IsUserOrFriend
 from .serializers import CreateUserSerializer, UserSerializer, ContentSerializer, RateSerializer, CommentSerializer
-from .viewsets import MixedPermissionModelViewSet
+from .mixins import MixedPermissionModelMixin
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
@@ -27,7 +27,8 @@ class UserCreateViewSet(mixins.CreateModelMixin,
     permission_classes = (AllowAny,)
 
 
-class ContentViewSet(MixedPermissionModelViewSet):
+class ContentViewSet(MixedPermissionModelMixin,
+                     viewsets.ModelViewSet):
     """
     Creates, updates, deletes, lists, retrieves contents
     """
@@ -42,7 +43,8 @@ class ContentViewSet(MixedPermissionModelViewSet):
     }
 
 
-class RateViewSet(MixedPermissionModelViewSet):
+class RateViewSet(MixedPermissionModelMixin,
+                  viewsets.ModelViewSet):
     """
     Creates, updates, deletes, lists, retrieves rates
     """
@@ -57,7 +59,8 @@ class RateViewSet(MixedPermissionModelViewSet):
     }
 
 
-class CommentViewSet(MixedPermissionModelViewSet):
+class CommentViewSet(MixedPermissionModelMixin,
+                     viewsets.ModelViewSet):
     """
     Creates, updates, deletes, lists, retrieves comments
     """

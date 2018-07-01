@@ -1,7 +1,4 @@
-from rest_framework import viewsets
-
-
-class MixedPermissionModelViewSet(viewsets.ModelViewSet):
+class MixedPermissionModelMixin:
    '''
    Mixed permission base model allowing for action level
    permission control. Subclasses may define their permissions
