@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name',)  # 'content',
-        read_only_fields = ('username', )
+        read_only_fields = ('username',)
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -29,6 +29,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
         
 class ContentSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Content
@@ -36,19 +37,22 @@ class ContentSerializer(serializers.ModelSerializer):
 
 
 class RateSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Rate
         fields = ('id', 'value', 'user', 'content',)
+
         validators = [
             UniqueTogetherValidator(
                 queryset = Rate.objects.all(),
-                fields = ('user', 'content',)
+                fields = ('user', 'content',),
             )
         ]
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Comment

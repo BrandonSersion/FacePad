@@ -44,7 +44,6 @@ class RateViewSet(viewsets.ModelViewSet):
     permission_classes = (IsUserOrReadOnly,)
 
 
-
 class CommentViewSet(viewsets.ModelViewSet):
     """
     Creates, updates, deletes, lists, retrieves comments
