@@ -64,4 +64,11 @@ class FriendSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Friend
-        fields = ('user', 'recipient',)
+        fields = ('id', 'user', 'recipient',)
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset = Friend.objects.all(),
+                fields = ('user', 'recipient',),
+            )
+        ]
