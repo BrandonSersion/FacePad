@@ -1,8 +1,9 @@
 from rest_framework import viewsets, mixins
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
 from .models import User, Content, Rate, Comment
-from .permissions import IsUserOrReadOnly
+from .permissions import IsUser, IsUserOrFriend
 from .serializers import CreateUserSerializer, UserSerializer, ContentSerializer, RateSerializer, CommentSerializer
+from .viewsets import MixedPermissionModelViewSet
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
@@ -13,7 +14,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsUserOrReadOnly,)
+    permission_classes = (IsUser,)
 
 
 class UserCreateViewSet(mixins.CreateModelMixin,
@@ -26,28 +27,46 @@ class UserCreateViewSet(mixins.CreateModelMixin,
     permission_classes = (AllowAny,)
 
 
-class ContentViewSet(viewsets.ModelViewSet):
+class ContentViewSet(MixedPermissionModelViewSet):
     """
     Creates, updates, deletes, lists, retrieves contents
     """
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
-    permission_classes = (IsUserOrReadOnly,)
+    permission_classes_by_action = {
+        'create': [IsUser],
+        'update': [IsAdminUser],
+        'delete': [IsAdminUser],
+        'list': [IsAdminUser],
+        'retrieve': [IsUserOrFriend],
+    }
 
 
-class RateViewSet(viewsets.ModelViewSet):
+class RateViewSet(MixedPermissionModelViewSet):
     """
     Creates, updates, deletes, lists, retrieves rates
     """
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
-    permission_classes = (IsUserOrReadOnly,)
+    permission_classes_by_action = {
+        'create': [IsUserOrFriend],
+        'update': [IsAdminUser],
+        'delete': [IsAdminUser],
+        'list': [IsAdminUser],
+        'retrieve': [IsUserOrFriend],
+    }
 
 
-class CommentViewSet(viewsets.ModelViewSet):
+class CommentViewSet(MixedPermissionModelViewSet):
     """
     Creates, updates, deletes, lists, retrieves comments
     """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = (IsUserOrReadOnly,)
+    permission_classes_by_action = {
+        'create': [IsUserOrFriend],
+        'update': [IsAdminUser],
+        'delete': [IsAdminUser],
+        'list': [IsAdminUser],
+        'retrieve': [IsUserOrFriend],
+    }
