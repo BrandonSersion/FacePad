@@ -4,7 +4,9 @@ from .models import Friend
 
 class IsUser(permissions.BasePermission):
     """
-    Object-level permission to only allow owners of an object to edit it.
+    Object-level permission
+    Read permission: User, Admin
+    Write permission: User, Admin
     """
     def has_object_permission(self, request, view, obj):
         return obj.user == request.user or request.user.is_staff
@@ -12,11 +14,14 @@ class IsUser(permissions.BasePermission):
 
 class IsUserOrFriend(permissions.BasePermission):
     """
-    Object-level permission to only allow owners of an object to edit it.
+    Object-level permission
+    Read permission: User, Friend, Admin
+    Write permission: User, Admin
     """
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
-            is_on_friend_list = Friend.objects.filter(user=obj.user, recipient=request.user)
-            return is_on_friend_list
+            request_user_is_friend_of_obj_user = \
+                Friend.objects.filter(user=obj.user, recipient=request.user)
+            return request_user_is_friend_of_obj_user or request.user.is_staff
         else:
             return obj.user == request.user or request.user.is_staff

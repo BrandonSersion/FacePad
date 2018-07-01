@@ -10,7 +10,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
                   viewsets.GenericViewSet):
     """
-    Updates and retrives user accounts
+    Updates and retrives user accounts.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -20,7 +20,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
 class UserCreateViewSet(mixins.CreateModelMixin,
                         viewsets.GenericViewSet):
     """
-    Creates user accounts
+    Creates user accounts.
     """
     queryset = User.objects.all()
     serializer_class = CreateUserSerializer
@@ -30,7 +30,7 @@ class UserCreateViewSet(mixins.CreateModelMixin,
 class ContentViewSet(MixedPermissionModelMixin,
                      viewsets.ModelViewSet):
     """
-    Creates, updates, deletes, lists, retrieves contents
+    Creates, updates, deletes, lists, and retrieves contents.
     """
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
@@ -46,7 +46,7 @@ class ContentViewSet(MixedPermissionModelMixin,
 class RateViewSet(MixedPermissionModelMixin,
                   viewsets.ModelViewSet):
     """
-    Creates, updates, deletes, lists, retrieves rates
+    Creates, updates, deletes, lists, and retrieves rates.
     """
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
@@ -62,7 +62,7 @@ class RateViewSet(MixedPermissionModelMixin,
 class CommentViewSet(MixedPermissionModelMixin,
                      viewsets.ModelViewSet):
     """
-    Creates, updates, deletes, lists, retrieves comments
+    Creates, updates, deletes, lists, and retrieves comments.
     """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -77,7 +77,7 @@ class CommentViewSet(MixedPermissionModelMixin,
 
 class FriendViewSet(viewsets.ModelViewSet):
     """
-    Creates, updates, deletes, lists, retrieves friend links
+    Creates, updates, deletes, lists, and retrieves friend links.
     """
     queryset = Friend.objects.all()
     serializer_class = FriendSerializer
