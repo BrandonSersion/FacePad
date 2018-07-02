@@ -8,7 +8,7 @@ from rest_framework.authtoken import views
 from .users.views import UserViewSet, ContentViewSet, RateViewSet, CommentViewSet, FriendViewSet
 
 router = DefaultRouter()
-router.register('users', UserViewSet)
+router.register('user', UserViewSet)
 router.register('content', ContentViewSet)
 router.register('rate', RateViewSet)
 router.register('comment', CommentViewSet)
