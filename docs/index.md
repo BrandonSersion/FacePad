@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/BrandonSersion/FacePad.svg?branch=master)](https://travis-ci.org/BrandonSersion/FacePad)
 [![Built with](https://img.shields.io/badge/Built_with-Cookiecutter_Django_Rest-F7B633.svg)](https://github.com/agconti/cookiecutter-django-rest)
 
-Small social network built using Django REST Framework.. Check out the project's [documentation](http://BrandonSersion.github.io/FacePad/).
+Small social network built using Django REST Framework.
 
 # Prerequisites
 

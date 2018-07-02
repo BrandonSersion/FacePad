@@ -5,11 +5,10 @@ from .models import User, Content, Rate, Comment, Friend
 
 class UserSerializer(serializers.ModelSerializer):
 
-    # content = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name',)  # 'content',
+        fields = ('id', 'username', 'password', 'first_name',
+            'last_name', 'date_of_birth', 'is_staff', 'friends',)  # TODO is_staff shouldnt be editable
         read_only_fields = ('username',)
 
 
@@ -23,7 +22,10 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'email', 'first_name', 'last_name', 'auth_token', 'date_of_birth',)
+        fields = (
+            'id', 'first_name', 'last_name', 'email', 'username',
+            'password', 'date_of_birth', 'friends',
+        )
         read_only_fields = ('auth_token',)
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -34,7 +36,7 @@ class ContentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Content
-        fields = ('id', 'title', 'file_upload', 'description', 'date_created', 'user',)
+        fields = ('id', 'file_upload', 'title', 'description', 'user', 'date_created',)
 
 
 class RateSerializer(serializers.ModelSerializer):
@@ -42,7 +44,7 @@ class RateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rate
-        fields = ('id', 'value', 'user', 'content',)
+        fields = ('id', 'user', 'content', 'value', 'date_created',)
 
         validators = [
             UniqueTogetherValidator(
@@ -57,7 +59,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'text', 'date_created', 'user', 'content',)
+        fields = ('id', 'user', 'content', 'text', 'date_created',)
 
 
 class FriendSerializer(serializers.ModelSerializer):
