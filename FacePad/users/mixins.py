@@ -1,13 +1,16 @@
 class MixedPermissionModelMixin:
-  '''
+  """
   ModelMixin allowing for permission control by action.
   Subclasses may define permissions by creating a 
   'permission_classes_by_action' variable.
 
   Example:
-  permission_classes_by_action = {'list': [AllowAny],
-                                  'create': [IsAdminUser],}
-  '''
+  permission_classes_by_action = {
+    'create': [IsAdminUser],
+    'list': [IsUser],
+    'retrieve': [AllowAny],
+  }
+  """
   permission_classes_by_action = {}
 
   def get_permissions(self):

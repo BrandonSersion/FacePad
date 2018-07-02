@@ -11,7 +11,7 @@ Small social network built using Django REST Framework.. Check out the project's
 - [Travis CLI](http://blog.travis-ci.com/2013-01-14-new-client/)
 - [Heroku Toolbelt](https://toolbelt.heroku.com/)
 
-# Local Development
+# Getting Started
 
 Start the dev server for local development:
 ```bash

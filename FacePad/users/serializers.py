@@ -1,29 +1,44 @@
-from rest_framework import serializers
+from rest_framework import serializers, mixins
 from rest_framework.validators import UniqueValidator, UniqueTogetherValidator
 from .models import User, Content, Rate, Comment, Friend
 
 
 class UserSerializer(serializers.ModelSerializer):
-
+    """
+    Serializes User destroy, list, retrieve.
+    """
     class Meta:
         model = User
         fields = ('id', 'username', 'password', 'first_name',
-            'last_name', 'date_of_birth', 'is_staff', 'friends',)  # TODO is_staff shouldnt be editable
+            'last_name', 'date_of_birth', 'is_staff', 'friends',)
         read_only_fields = ('username',)
 
 
-class CreateUserSerializer(serializers.ModelSerializer):
-
+class EncryptUserSerializer(serializers.ModelSerializer):
+    """
+    Serializes User create, update.
+    Encrypts password before it is stored.
+    """
     def create(self, validated_data):
-        # call create_user on user object. Without this
-        # the password will be stored in plain text.
+        """
+        Overrides ModelSerializer create function.
+        Encrypts the password field before saving it.
+        """
         user = User.objects.create_user(**validated_data)
         return user
+
+    def update(self, validated_data):
+        """
+        Overrides ModelSerializer update function.
+        Encrypts the password field before saving it.
+        """
+        user = User.objects.update_user(**validated_data)
+        return user       
 
     class Meta:
         model = User
         fields = (
-            'id', 'first_name', 'last_name', 'email', 'username',
+            'first_name', 'last_name', 'email', 'username',
             'password', 'date_of_birth', 'friends',
         )
         read_only_fields = ('auth_token',)
@@ -31,6 +46,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
         
 class ContentSerializer(serializers.ModelSerializer):
+    """
+    Serializes Content item create, destroy, list, retrieve, update.
+    """
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     file_upload = serializers.FileField(max_length=None, use_url=True)
 
@@ -40,6 +58,9 @@ class ContentSerializer(serializers.ModelSerializer):
 
 
 class RateSerializer(serializers.ModelSerializer):
+    """
+    Serializes Rate create, destroy, list, retrieve, update.
+    """
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
@@ -55,6 +76,9 @@ class RateSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    """
+    Serializes Comment create, destroy, list, retrieve, update.
+    """
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
@@ -63,6 +87,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class FriendSerializer(serializers.ModelSerializer):
+    """
+    Serializes friend connection create, destroy, list, retrieve, update.
+    """
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:

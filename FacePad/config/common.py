@@ -16,13 +16,14 @@ class Common(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
 
-
         # Third party apps
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
         'django_filters',            # for filtering rest endpoints
-        'django_extensions',         # for python manage.py reset_db  # TODO remove for production
-
+        
+        # For python manage.py reset_db  # TODO remove for production
+        'django_extensions',         
+                                     
         # Your apps
         'FacePad.users',
 

@@ -2,7 +2,7 @@ from rest_framework import viewsets, mixins
 from rest_framework.permissions import AllowAny, IsAdminUser
 from .models import User, Content, Rate, Comment, Friend
 from .permissions import IsUser, IsUserOrFriend
-from .serializers import CreateUserSerializer, UserSerializer, ContentSerializer, RateSerializer, CommentSerializer, FriendSerializer
+from .serializers import UserSerializer, EncryptUserSerializer, ContentSerializer, RateSerializer, CommentSerializer, FriendSerializer
 from .mixins import MixedPermissionModelMixin
 
 
@@ -11,11 +11,11 @@ class UserViewSet(MixedPermissionModelMixin,
     """
     Creates, updates, deletes, lists, and retrieves user accounts.
     """
-
-    # On POST or PUT request uses special serializer that encrypts password
+    # On POST or PUT request, uses special
+    # serializer to encrypt the password field.
     def get_serializer_class(self, *args, **kwargs):
         if self.request.method == 'POST' or self.request.method == 'PUT':
-            return CreateUserSerializer
+            return EncryptUserSerializer
         return UserSerializer
 
     queryset = User.objects.all()
@@ -24,14 +24,14 @@ class UserViewSet(MixedPermissionModelMixin,
         'update': [IsUser],
         'delete': [IsAdminUser],
         'list': [IsAdminUser],
-        'retrieve': [IsUserOrFriend],  # TODO fix bug where admins can't retrieve
+        'retrieve': [IsUserOrFriend],
     }
 
 
 class ContentViewSet(MixedPermissionModelMixin,
                      viewsets.ModelViewSet):
     """
-    Creates, updates, deletes, lists, and retrieves contents.
+    Creates, updates, deletes, lists, and retrieves content items.
     """
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
