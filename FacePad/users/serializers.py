@@ -30,10 +30,11 @@ class CreateUserSerializer(serializers.ModelSerializer):
         
 class ContentSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    file_upload = serializers.FileField(max_length=None, use_url=True)
 
     class Meta:
         model = Content
-        fields = ('id', 'title', 'description', 'date_created', 'user',)
+        fields = ('id', 'title', 'file_upload', 'description', 'date_created', 'user',)
 
 
 class RateSerializer(serializers.ModelSerializer):

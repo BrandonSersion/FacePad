@@ -26,6 +26,7 @@ class User(AbstractUser):
 class Content(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255, unique=True)
+    file_upload = models.FileField(upload_to='files/')
     description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -68,6 +69,9 @@ class Friend(models.Model):
         on_delete=models.CASCADE,
         related_name='to_user'
     )
+
+    def __str__(self):
+        return f'{self.user} friended {self.recipient}'
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
