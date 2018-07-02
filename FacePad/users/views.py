@@ -76,10 +76,17 @@ class CommentViewSet(MixedPermissionModelMixin,
     }
 
 
-class FriendViewSet(viewsets.ModelViewSet):
+class FriendViewSet(MixedPermissionModelMixin,
+                    viewsets.ModelViewSet):
     """
     Creates, updates, deletes, lists, and retrieves friend links.
     """
     queryset = Friend.objects.all()
     serializer_class = FriendSerializer
-    permission_classes = (IsUser,)
+    permission_classes_by_action = {
+        'create': [IsUser],
+        'update': [IsAdminUser],
+        'delete': [IsAdminUser],
+        'list': [IsAdminUser],
+        'retrieve': [IsUserOrFriend],
+    }
